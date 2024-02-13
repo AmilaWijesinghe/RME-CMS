@@ -1,9 +1,9 @@
 import mongoose, { Schema } from "mongoose";
 
 const ExtraPriceSchema = new Schema({
-    name: String,
-    price: Number,
-  });
+  name: String,
+  price: Number,
+});
 
 const MenuItemsSchema = new mongoose.Schema(
   {
@@ -31,7 +31,15 @@ const MenuItemsSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.String,
       required: true,
     },
-    extraIngredients:{type:[ExtraPriceSchema]} ,
+    extraIngredients: {
+      type: [
+        {
+          name: mongoose.Schema.Types.String,
+          price: mongoose.Schema.Types.Number
+        },
+      ],
+      required: true
+    }
   },
   {
     timestamps: true,
