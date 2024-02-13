@@ -19,6 +19,10 @@ const MenuItemsSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.String,
       required: true,
     },
+    description: {
+      type: mongoose.Schema.Types.String,
+      required: true,
+    },
     basePrice: {
       type: mongoose.Schema.Types.Number,
       required: true,
