@@ -2,7 +2,7 @@ export const categoryValidationSchema = {
   categoryName: {
     isLength: {
       options: {
-        min: 5,
+        min: 1,
         max: 25,
       },
       errorMessage:

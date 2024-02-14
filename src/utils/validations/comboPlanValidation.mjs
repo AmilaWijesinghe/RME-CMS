@@ -2,7 +2,7 @@ export const comboPlanValidationSchema = {
     comboPlanName: {
         isLength: {
           options: {
-            min: 5,
+            min: 1,
             max: 35,
           },
           errorMessage:
@@ -18,7 +18,7 @@ export const comboPlanValidationSchema = {
       description: {
         isLength: {
           options: {
-            min: 5,
+            min: 1,
             max: 150,
           },
           errorMessage:

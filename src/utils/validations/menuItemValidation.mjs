@@ -2,7 +2,7 @@ export const menuItemValidationSchema = {
     itemName: {
         isLength: {
 			options: {
-				min: 5,
+				min: 1,
 				max: 50,
 			},
 			errorMessage:
@@ -19,7 +19,7 @@ export const menuItemValidationSchema = {
     description:{
         isLength: {
 			options: {
-				min: 10,
+				min: 1,
 				max: 100,
 			},
 			errorMessage:

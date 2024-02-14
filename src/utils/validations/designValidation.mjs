@@ -2,7 +2,7 @@ export const designvalidationSchema = {
     restaurantName: {
         isLength: {
           options: {
-            min: 5,
+            min: 1,
             max: 35,
           },
           errorMessage:
