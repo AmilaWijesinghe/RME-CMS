@@ -32,7 +32,7 @@ const findDesignById = async(request,response,next) => {
       response.status(201).send(savedMenuItem);
     } catch (error) {
       console.error(error);
-      response.status(500).send({ message: "Failed to create menu item" });
+      response.status(500).send({ message: "Failed to create design" });
     }
   });
     
