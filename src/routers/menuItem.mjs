@@ -1,9 +1,19 @@
-import { Router } from "express";
-import { MenuItems } from "../models/menuItem.mjs"
+import { Router, request, response } from "express";
+import { MenuItems } from "../models/menuItem.mjs";
+import { validationResult,checkSchema } from "express-validator"; 
+import { menuItemValidationSchema } from "../utils/validations/menuItemValidation.mjs"; 
 
 const router = Router();
 
-router.get("/api/menuitems", async (request, response) => {
+const findItemById = async(request,response,next) => {
+  const { id } = request.params;
+  const item = await MenuItems.findById(id);
+  if(!item) return response.status(400).json({ message: `cannot find any item with ID ${id}` });
+  request.findItem = item;
+  next();
+}
+
+router.get("/api/menuitem", async (request, response) => {
   try {
     const menuItems = await MenuItems.find({});
     response.status(200).send(menuItems);
@@ -13,15 +23,49 @@ router.get("/api/menuitems", async (request, response) => {
   }
 });
 
-router.post("/api/menuitems", async (request, response) => {
+router.get("/api/menuitem/:id", findItemById, async (request, response) => {
+  const { findItem } = request;
+  try {
+    return response.status(200).send(findItem);
+  } catch (error) {
+    console.error(error);
+    response.status(500).send({ message: "Error retrieving menu item" });
+  }
+});
+
+router.post("/api/menuitem", checkSchema(menuItemValidationSchema), async (request, response) => {
+  const result = validationResult(request)
+  if(!result.isEmpty()) return response.status(400).send(result.array());
   try {
     const newMenuItem = new MenuItems(request.body);
-    console.log(newMenuItem)
     const savedMenuItem = await newMenuItem.save();
-    response.status(201).send(savedMenuItem); 
+    response.status(201).send(savedMenuItem);
   } catch (error) {
     console.error(error);
     response.status(500).send({ message: "Failed to create menu item" });
+  }
+});
+
+router.put("/api/menuitem/:id", findItemById, checkSchema(menuItemValidationSchema), async (request, response) => {
+  const result = validationResult(request)
+  if(!result.isEmpty()) return response.status(400).send(result.array());
+  const { id } = request.params;
+  try {
+    const item = await MenuItems.findByIdAndUpdate(id, request.body);
+    const updatedItem = await MenuItems.findById(id);
+    return response.status(200).send(updatedItem);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+router.delete("/api/menuitem/:id", findItemById, async (request, response) => {
+  const { id } = request.params;
+  try {
+    const item = await MenuItems.findByIdAndDelete(id);
+    return response.sendStatus(200);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 });
 

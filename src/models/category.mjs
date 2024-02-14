@@ -5,6 +5,10 @@ const CategorySchema = new mongoose.Schema({
         type: mongoose.Schema.Types.String,
         required: true,
       }
-})
+},
+{
+  timestamps: true
+}
+);
 
-export const category = mongoose.model("category", CategorySchema);
+export const Category = mongoose.model("category", CategorySchema);
