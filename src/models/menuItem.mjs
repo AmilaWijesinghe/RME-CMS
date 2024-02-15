@@ -11,8 +11,8 @@ const MenuItemsSchema = new mongoose.Schema(
       required: true,
     },
     imgURL: {
-      type: String,
-      required: true,
+        type: String,
+        required: true,
     },
     category: {
       type: String,
@@ -48,7 +48,7 @@ const MenuItemsSchema = new mongoose.Schema(
     ],
   },
   {
-    timestamps: true,
+    Date: true,
   }
 );
 

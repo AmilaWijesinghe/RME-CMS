@@ -2,6 +2,7 @@ import  express  from "express";
 import mongoose from "mongoose";
 import routers from "./routers/index.mjs";
 import cors from 'cors';
+import * as dotenv from 'dotenv';
 
 mongoose
 	.connect("mongodb+srv://SolidSnake:123@cluster0.yyabstc.mongodb.net/restaurantManagementEngineDB")
@@ -11,6 +12,7 @@ mongoose
 const app = express();
 app.use(express.json());
 app.use(cors());
+dotenv.config();
 app.use(routers)
 
 const PORT = process.env.PORT || 3000;

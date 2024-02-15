@@ -22,7 +22,7 @@ router.get("/api/categories", async (request, response) => {
   }
 });
 
-router.get("/api/menuitem/:id", async (request, response) => {
+router.get("/api/categories/:id", async (request, response) => {
   const { id } = request.params;
   try {
     const item = await Category.findById(id);
@@ -47,19 +47,20 @@ router.post("/api/categories", checkSchema(categoryValidationSchema),async (requ
   }
 });
 
-router.put("/api/menuitem/:id", findCategoryById, checkSchema(categoryValidationSchema), async (request, response) => {
+router.put("/api/categories/:id", findCategoryById, checkSchema(categoryValidationSchema), async (request, response) => {
   const result = validationResult(request)
   if(!result.isEmpty()) return response.status(400).send(result.array());
   const { id } = request.params;
   try {
     const item = await Category.findByIdAndUpdate(id, request.body);
+    const updatedItem = await Category.findById(id);
     return response.status(200).send(updatedItem);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
 
-router.delete("/api/menuitem/:id", findCategoryById, async (request, response) => {
+router.delete("/api/categories/:id", findCategoryById, async (request, response) => {
   const { id } = request.params;
   try {
     const item = await Category.findByIdAndDelete(id);
