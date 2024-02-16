@@ -60,7 +60,7 @@ router.put("/api/categories/:id", findCategoryById, checkSchema(categoryValidati
   }
 });
 
-router.delete("/api/categories/:id", findCategoryById, async (request, response) => {
+router.delete("/api/categories /:id", findCategoryById, async (request, response) => {
   const { id } = request.params;
   try {
     const item = await Category.findByIdAndDelete(id);
