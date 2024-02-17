@@ -34,8 +34,9 @@ router.get("/api/menuitem/:id", findItemById, async (request, response) => {
 });
 
 router.post("/api/menuitem", async (request, response) => {
-  const result = validationResult(request)
-  const { id, itemName, description, imgURL, category, basePrice, sizes, extraIngredients } = request.body
+  // const result = validationResult(request)
+  // if(!result.isEmpty()) return response.status(400).send(result.array());
+  const { itemName, description, imgURL, category, basePrice, sizes, extraIngredients } = request.body
   if(!result.isEmpty()) return response.status(400).send(result.array());
   try {
     // console.log(request.body)
@@ -76,7 +77,7 @@ router.put("/api/menuitem/:id", findItemById, async (request, response) => {
     const updatedItem = await MenuItems.findById(id);
     return response.status(200).send(updatedItem);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    response.status(500).json({ message: error.message });
   }
 });
 
@@ -86,7 +87,7 @@ router.delete("/api/menuitem/:id", findItemById, async (request, response) => {
     const item = await MenuItems.findByIdAndDelete(id);
     return response.sendStatus(200);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    response.status(500).json({ message: error.message });
   }
 });
 
