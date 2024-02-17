@@ -73,6 +73,20 @@ router.put("/api/menuitem/:id", findItemById, async (request, response) => {
   }
 });
 
+router.put("/api/menuitems/:id", findItemById, async (request, response) => {
+  // const result = validationResult(request)
+  // if(!result.isEmpty()) return response.status(400).send(result.array());
+  const { id } = request.params;
+  try {
+    await MenuItems.findByIdAndDelete(id)
+    const updateditem = await MenuItems.create(request.body);
+    return response.status(200).send(updateditem);
+  } catch (error) {
+    console.error(error);
+    response.status(500).json({ message: error.message });
+  }
+});
+
 router.delete("/api/menuitem/:id", findItemById, async (request, response) => {
   const { id } = request.params;
   try {

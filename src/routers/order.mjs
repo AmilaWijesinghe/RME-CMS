@@ -58,8 +58,7 @@ router.post("/api/order", async (request, response) => {
 router.put("/api/order/:id", findOrderById,async (request, response) => {
     const { id } = request.params;
     try {
-         await Order.findByIdAndUpdate(id, request.body);
-         const updatedOrder = await Order.findById(id)
+         const updatedOrder = await Order.findByIdAndUpdate(id, request.body, { new: true });
         return response.status(200).send(updatedOrder)
     } catch (error) {
         console.error(error);
