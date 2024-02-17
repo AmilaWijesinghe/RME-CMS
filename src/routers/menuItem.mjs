@@ -42,7 +42,6 @@ router.post("/api/menuitem", async (request, response) => {
     // const imageResult = await cloudinary.uploader.upload(imgURL)
     // console.log(imageResult)
     const newItem = await MenuItems.create({
-      id,
       itemName,
       description,
       imgURL,//:imageResult.url,
@@ -58,12 +57,22 @@ router.post("/api/menuitem", async (request, response) => {
   }
 });
 
-router.put("/api/menuitem/:id", findItemById, checkSchema(menuItemValidationSchema), async (request, response) => {
-  const result = validationResult(request)
-  if(!result.isEmpty()) return response.status(400).send(result.array());
+router.put("/api/menuitem/:id", findItemById, async (request, response) => {
+  // const result = validationResult(request)
+  // if(!result.isEmpty()) return response.status(400).send(result.array());
   const { id } = request.params;
+  const { itemName, description, imgURL, category, basePrice, sizes, extraIngredients } = request.body
   try {
-    const item = await MenuItems.findByIdAndUpdate(id, request.body);
+    const item = await MenuItems.create({
+      id,
+      itemName,
+      description,
+      imgURL,//:imageResult.url,
+      category,
+      basePrice,
+      sizes,
+      extraIngredients
+    });
     const updatedItem = await MenuItems.findById(id);
     return response.status(200).send(updatedItem);
   } catch (error) {
