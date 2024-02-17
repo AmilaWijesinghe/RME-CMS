@@ -64,10 +64,11 @@ router.put("/api/menuitem/:id", findItemById, async (request, response) => {
   const { id } = request.params;
   const { itemName, description, imgURL, category, basePrice, sizes, extraIngredients } = request.body
   try {
-    const item = await MenuItems.findByIdAndUpdate(id,{ $set: { itemName, description, imgURL, category, basePrice, sizes, extraIngredients }
+    const updateditem = await MenuItems.findByIdAndUpdate(id,{ $set: { itemName, description, imgURL, category, basePrice, sizes, extraIngredients }
     }, { new: true } );
-    return response.status(200).send(item);
+    return response.status(200).send(updateditem);
   } catch (error) {
+    console.error(error);
     response.status(500).json({ message: error.message });
   }
 });

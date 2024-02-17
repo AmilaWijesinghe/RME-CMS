@@ -51,8 +51,7 @@ const findItemById = async(request,response,next) => {
     if(!result.isEmpty()) return response.status(400).send(result.array());
     const { id } = request.params;
     try {
-      const item = await ComboPlan.findByIdAndUpdate(id, request.body);
-      const updatedItem = await ComboPlan.findById(id);
+      const updatedItem = await ComboPlan.findByIdAndUpdate(id, request.body,{ new: true });
       return response.status(200).send(updatedItem);
     } catch (error) {
       res.status(500).json({ message: error.message });

@@ -41,9 +41,8 @@ const findDesignById = async(request,response,next) => {
     if(!result.isEmpty()) return response.status(400).send(result.array());
     const { id } = request.params;
     try {
-      const item = await Design.findByIdAndUpdate(id, request.body);
-      const updatedItem = await Design.findById(id);
-      return response.status(200).send(updatedItem);
+      const updatedDesign = await Design.findByIdAndUpdate(id, request.body,{ new: true });
+      return response.status(200).send(updatedDesign);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
