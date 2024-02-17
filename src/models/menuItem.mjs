@@ -25,11 +25,11 @@ const MenuItemsSchema = new mongoose.Schema(
     sizes: [
       {
         sizeName: {
-          type: String,
+          type: Array,
           required: true,
         },
         percentage: {
-          type: Number,
+          type: Array,
           required: true,
         },
       },
@@ -37,11 +37,11 @@ const MenuItemsSchema = new mongoose.Schema(
     extraIngredients: [
       {
         ingredientName: {
-          type: String,
+          type: Array,
           required: true,
         },
         ingredientPrice: {
-          type: Number,
+          type: Array,
           required: true,
         },
       },

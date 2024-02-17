@@ -2,7 +2,7 @@ import { Router, request, response } from "express";
 import { MenuItems } from "../models/menuItem.mjs";
 import { validationResult,checkSchema } from "express-validator"; 
 import { menuItemValidationSchema } from "../utils/validations/menuItemValidation.mjs"; 
-import  cloudinary  from "../utils/cloudinary.mjs"
+import  cloudinary  from "../utils/cloudinary.mjs";
 const router = Router();
 
 const findItemById = async(request,response,next) => {
@@ -33,15 +33,16 @@ router.get("/api/menuitem/:id", findItemById, async (request, response) => {
   }
 });
 
-router.post("/api/menuitem", checkSchema(menuItemValidationSchema), async (request, response) => {
+router.post("/api/menuitem", async (request, response) => {
   const result = validationResult(request)
-  const { itemName, description, imgURL, category, basePrice, sizes, extraIngredients } = request.body
+  const { id, itemName, description, imgURL, category, basePrice, sizes, extraIngredients } = request.body
   if(!result.isEmpty()) return response.status(400).send(result.array());
   try {
     // console.log(request.body)
     // const imageResult = await cloudinary.uploader.upload(imgURL)
     // console.log(imageResult)
     const newItem = await MenuItems.create({
+      id,
       itemName,
       description,
       imgURL,//:imageResult.url,

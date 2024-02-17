@@ -20,7 +20,7 @@ export const menuItemValidationSchema = {
         isLength: {
 			options: {
 				min: 1,
-				max: 100,
+				max: 500,
 			},
 			errorMessage:
 				"description must be at least 10 characters with a max of 100 characters",

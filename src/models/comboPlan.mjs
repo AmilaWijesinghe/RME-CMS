@@ -12,21 +12,21 @@ const ComboPlanSchema = new mongoose.Schema({
       items: [
         {
           itemName:{
-            type:String,
+            type:Array,
             required:true
           },
           basePrice:{
-            type:Number,
+            type:Array,
             required:true
           }
         }
       ],
       price: {
-        type: mongoose.Schema.Types.Number,
+        type:Number,
         required: true,
       },
       imageURL: {
-        type: mongoose.Schema.Types.String,
+        type:String,
         required: true,
       }
 },
