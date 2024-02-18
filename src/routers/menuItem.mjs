@@ -3,6 +3,8 @@ import { MenuItems } from "../models/menuItem.mjs";
 import { validationResult,checkSchema } from "express-validator"; 
 import { menuItemValidationSchema } from "../utils/validations/menuItemValidation.mjs"; 
 import  cloudinary  from "../utils/cloudinary.mjs";
+import { Img } from "../models/img.mjs";
+
 const router = Router();
 
 const findItemById = async(request,response,next) => {
@@ -52,6 +54,22 @@ router.post("/api/menuitem", async (request, response) => {
       extraIngredients
     })
     response.status(201).send(newItem);
+  } catch (error) {
+    console.error(error);
+    response.status(500).send({ message: "Failed to create menu item" });
+  }
+});
+
+router.post("/api/menuitem/img", async (request, response) => {
+  const { img } = request.body
+  try {
+    console.log(request.body)
+    const imageResult = await cloudinary.uploader.upload(img)
+    console.log(imageResult)
+    const newImage = await Img.create({
+      imgURL:imageResult.url,
+    })
+    response.status(201).send(newImage);
   } catch (error) {
     console.error(error);
     response.status(500).send({ message: "Failed to create menu item" });
