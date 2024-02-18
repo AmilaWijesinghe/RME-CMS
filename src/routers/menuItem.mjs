@@ -1,22 +1,21 @@
 import { Router, request, response } from "express";
 import { MenuItems } from "../models/menuItem.mjs";
-import { validationResult, checkSchema } from "express-validator";
-import { menuItemValidationSchema } from "../utils/validations/menuItemValidation.mjs";
-import cloudinary from "../utils/cloudinary.mjs";
+import { validationResult,checkSchema } from "express-validator"; 
+import { menuItemValidationSchema } from "../utils/validations/menuItemValidation.mjs"; 
+import  cloudinary  from "../utils/cloudinary.mjs";
 import { Img } from "../models/img.mjs";
 
 const router = Router();
 
-const findItemById = async (request, response, next) => {
+
+
+const findItemById = async(request,response,next) => {
   const { id } = request.params;
   const item = await MenuItems.findById(id);
-  if (!item)
-    return response
-      .status(400)
-      .json({ message: `cannot find any item with ID ${id}` });
+  if(!item) return response.status(400).json({ message: `cannot find any item with ID ${id}` });
   request.findItem = item;
   next();
-};
+}
 
 router.get("/api/menuitem", async (request, response) => {
   try {
@@ -41,16 +40,8 @@ router.get("/api/menuitem/:id", findItemById, async (request, response) => {
 router.post("/api/menuitem", async (request, response) => {
   // const result = validationResult(request)
   // if(!result.isEmpty()) return response.status(400).send(result.array());
-  const {
-    itemName,
-    description,
-    imgURL,
-    category,
-    basePrice,
-    sizes,
-    extraIngredients,
-  } = request.body;
-  if (!result.isEmpty()) return response.status(400).send(result.array());
+  const { itemName, description, imgURL, category, basePrice, sizes, extraIngredients } = request.body
+  if(!result.isEmpty()) return response.status(400).send(result.array());
   try {
     // console.log(request.body)
     // const imageResult = await cloudinary.uploader.upload(imgURL)
@@ -58,12 +49,12 @@ router.post("/api/menuitem", async (request, response) => {
     const newItem = await MenuItems.create({
       itemName,
       description,
-      imgURL: imageResult.url,
+      imgURL:imageResult.url,
       category,
       basePrice,
       sizes,
-      extraIngredients,
-    });
+      extraIngredients
+    })
     response.status(201).send(newItem);
   } catch (error) {
     console.error(error);
@@ -72,53 +63,44 @@ router.post("/api/menuitem", async (request, response) => {
 });
 
 router.post("/api/menuitem/img", async (req, res) => {
-  const { image } = req.body;
+
+  const { img } = req.body
+  console.log(img);
   try {
-    const imageResult = await cloudinary.uploader.upload(image, {
-      folder: "products",
+
+    if (!img) {
+      return res.status(400).send({ message: "Missing required 'file' field in request body" });
+    }
+
+    const imageResult = await cloudinary.uploader.upload(img, {
+      folder: "products"
     });
-    
+
+    if (!imageResult || !imageResult.url) {
+      return res.status(500).send({ message: "Failed to upload image to Cloudinary" });
+    }
+
     const newImage = await Img.create({
-      imgURL: imageResult.secure_url,
+      imgURL: imageResult.url,
     });
 
     // Send successful response
-    res.status(201);
+    res.status(201).send(newImage);
   } catch (error) {
     console.error(error);
     res.status(500).send({ message: "Internal server error" }); // Generic error message for production
   }
 });
 
+
 router.put("/api/menuitem/:id", findItemById, async (request, response) => {
   // const result = validationResult(request)
   // if(!result.isEmpty()) return response.status(400).send(result.array());
   const { id } = request.params;
-  const {
-    itemName,
-    description,
-    imgURL,
-    category,
-    basePrice,
-    sizes,
-    extraIngredients,
-  } = request.body;
+  const { itemName, description, imgURL, category, basePrice, sizes, extraIngredients } = request.body
   try {
-    const updateditem = await MenuItems.findByIdAndUpdate(
-      id,
-      {
-        $set: {
-          itemName,
-          description,
-          imgURL,
-          category,
-          basePrice,
-          sizes,
-          extraIngredients,
-        },
-      },
-      { new: true }
-    );
+    const updateditem = await MenuItems.findByIdAndUpdate(id,{ $set: { itemName, description, imgURL, category, basePrice, sizes, extraIngredients }
+    }, { new: true } );
     return response.status(200).send(updateditem);
   } catch (error) {
     console.error(error);
