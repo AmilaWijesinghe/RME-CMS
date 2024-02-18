@@ -64,16 +64,17 @@ router.post("/api/menuitem", async (request, response) => {
 
 router.post("/api/menuitem/img", async (req, res) => {
 
-  const { img } = req.body
-  console.log(img);
+  const { image } = req.body
+  console.log(image);
   try {
 
-    if (!img) {
+    if (!image) {
       return res.status(400).send({ message: "Missing required 'file' field in request body" });
     }
 
-    const imageResult = await cloudinary.uploader.upload(img, {
-      folder: "products"
+    const imageResult = await cloudinary.uploader.upload(image, {
+      resource_type: 'auto', 
+      public_id: 'menuitem_img_' + Date.now()
     });
 
     if (!imageResult || !imageResult.url) {
