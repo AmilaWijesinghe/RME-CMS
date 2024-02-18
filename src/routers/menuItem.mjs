@@ -60,37 +60,14 @@ router.post("/api/menuitem", async (request, response) => {
   }
 });
 
-router.post("/api/menuitem/img", async (request, response) => {
-  const { img } = request.fil
-  try {
-    console.log(request.body)
-    const imageResult = await cloudinary.uploader.upload(img)
-    console.log(imageResult)
-    const newImage = await Img.create({
-      imgURL:imageResult.url,
-    })
-    response.status(201).send(newImage);
-  } catch (error) {
-    console.error(error);
-    response.status(500).send({ message: "Failed to create menu item" });
-  }
-});
-
 router.post("/api/menuitem/img", async (req, res) => {
   try {
-    // 1. Validate request body
-    // if (!req.body || !req.body.img) {
-    //   return res.status(400).send({ message: "Missing required 'img' field in request body" });
-    // }
+    const img = req.files;
 
-    // 2. Validate image format (optional, based on requirements)
-    // const supportedFormats = ['image/jpeg', 'image/png'];
-    // if (!supportedFormats.includes(req.body.img.mimetype)) {
-    //   return res.status(400).send({ message: "Unsupported image format. Valid formats are: " + supportedFormats.join(', ') });
-    // }
+    console.log(img);
 
     // 3. Upload image to Cloudinary
-    const imageResult = await cloudinary.uploader.upload(req.body.img, {
+    const imageResult = await cloudinary.uploader.upload(img, {
       resource_type: 'auto', // For automatic type detection
       public_id: 'menuitem_img_' + Date.now(), // Optional: Set custom public ID
       use_filename: true, // Optional: Preserve original filename if desired
