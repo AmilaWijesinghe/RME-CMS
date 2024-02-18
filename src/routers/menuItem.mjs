@@ -39,13 +39,13 @@ router.post("/api/menuitem", async (request, response) => {
   const { itemName, description, imgURL, category, basePrice, sizes, extraIngredients } = request.body
   if(!result.isEmpty()) return response.status(400).send(result.array());
   try {
-    // console.log(request.body)
-    // const imageResult = await cloudinary.uploader.upload(imgURL)
-    // console.log(imageResult)
+    console.log(request.body)
+    const imageResult = await cloudinary.uploader.upload(imgURL)
+    console.log(imageResult)
     const newItem = await MenuItems.create({
       itemName,
       description,
-      imgURL,//:imageResult.url,
+      imgURL:imageResult.url,
       category,
       basePrice,
       sizes,
@@ -66,20 +66,6 @@ router.put("/api/menuitem/:id", findItemById, async (request, response) => {
   try {
     const updateditem = await MenuItems.findByIdAndUpdate(id,{ $set: { itemName, description, imgURL, category, basePrice, sizes, extraIngredients }
     }, { new: true } );
-    return response.status(200).send(updateditem);
-  } catch (error) {
-    console.error(error);
-    response.status(500).json({ message: error.message });
-  }
-});
-
-router.put("/api/menuitems/:id", findItemById, async (request, response) => {
-  // const result = validationResult(request)
-  // if(!result.isEmpty()) return response.status(400).send(result.array());
-  const { id } = request.params;
-  try {
-    await MenuItems.findByIdAndDelete(id)
-    const updateditem = await MenuItems.create(request.body);
     return response.status(200).send(updateditem);
   } catch (error) {
     console.error(error);
