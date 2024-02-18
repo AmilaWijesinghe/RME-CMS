@@ -4,8 +4,10 @@ import { validationResult,checkSchema } from "express-validator";
 import { menuItemValidationSchema } from "../utils/validations/menuItemValidation.mjs"; 
 import  cloudinary  from "../utils/cloudinary.mjs";
 import { Img } from "../models/img.mjs";
-
+import multer from "multer";
 const router = Router();
+
+const upload = multer({ dest: 'uploads/' });
 
 const findItemById = async(request,response,next) => {
   const { id } = request.params;
@@ -60,31 +62,32 @@ router.post("/api/menuitem", async (request, response) => {
   }
 });
 
-router.post("/api/menuitem/img", async (req, res) => {
+router.post("/api/menuitem/img", upload.single('file'), async (req, res) => {
   try {
-    const img = req.files;
+    // Validate request body
+    if (!req.file) {
+      return res.status(400).send({ message: "Missing required 'file' field in request body" });
+    }
 
-    console.log(img);
-
-    // 3. Upload image to Cloudinary
-    const imageResult = await cloudinary.uploader.upload(img, {
+    // Upload image to Cloudinary
+    const imageResult = await cloudinary.uploader.upload(req.file.buffer, {
       resource_type: 'auto', // For automatic type detection
       public_id: 'menuitem_img_' + Date.now(), // Optional: Set custom public ID
       use_filename: true, // Optional: Preserve original filename if desired
     });
 
-    // 4. Handle upload errors
+    // Handle upload errors
     if (!imageResult || !imageResult.url) {
       return res.status(500).send({ message: "Failed to upload image to Cloudinary" });
     }
 
-    // 5. Create new image record in database
+    // Create new image record in database
     const newImage = await Img.create({
       imgURL: imageResult.url,
       // Add other fields as needed (e.g., name, description)
     });
 
-    // 6. Send successful response
+    // Send successful response
     res.status(201).send(newImage);
   } catch (error) {
     console.error(error);
