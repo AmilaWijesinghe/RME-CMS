@@ -10,7 +10,7 @@ mongoose
 	.catch((err) => console.log(`Error: ${err}`));
 
 const app = express();
-app.use(express.json());
+app.use(express.json({ limit: '25mb' }));
 app.use(cors());
 dotenv.config();
 app.use(routers)

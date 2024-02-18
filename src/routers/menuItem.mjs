@@ -62,36 +62,27 @@ router.post("/api/menuitem", async (request, response) => {
   }
 });
 
-router.post("/api/menuitem/img", upload.single('file'), async (req, res) => {
+router.post("/api/menuitem/img", async (req, res) => {
+ const { img } = req.body;
+  console.log(img);
   try {
-    // Validate request body
-    if (!req.file) {
-      return res.status(400).send({ message: "Missing required 'file' field in request body" });
-    }
-
-    // Upload image to Cloudinary
-    const imageResult = await cloudinary.uploader.upload(req.file.buffer, {
-      resource_type: 'auto', // For automatic type detection
-      public_id: 'menuitem_img_' + Date.now(), // Optional: Set custom public ID
-      use_filename: true, // Optional: Preserve original filename if desired
+    const imageResult = await cloudinary.uploader.upload(img, {
+      resource_type: 'auto',
+      public_id: 'menuitem_img_' + Date.now(), 
+      use_filename: true,
     });
 
-    // Handle upload errors
     if (!imageResult || !imageResult.url) {
       return res.status(500).send({ message: "Failed to upload image to Cloudinary" });
     }
 
-    // Create new image record in database
     const newImage = await Img.create({
       imgURL: imageResult.url,
-      // Add other fields as needed (e.g., name, description)
     });
-
-    // Send successful response
     res.status(201).send(newImage);
   } catch (error) {
     console.error(error);
-    res.status(500).send({ message: "Internal server error" }); // Generic error message for production
+    res.status(500).send({ message: "Internal server error" }); 
   }
 });
 
