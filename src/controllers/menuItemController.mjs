@@ -1,6 +1,5 @@
 import { MenuItems } from "../models/menuItem.mjs";
 import { validationResult } from "express-validator";
-
 import cloudinary from "../utils/cloudinary.mjs";
 
 export const findItemById = async (req, res, next) => {
@@ -91,7 +90,7 @@ export const updateMenuItem = async (req, res, next) => {
         $set: {
           itemName,
           description,
-          imgURL:imageResult.url,
+          imgURL: imageResult.url,
           category,
           basePrice,
           sizes,

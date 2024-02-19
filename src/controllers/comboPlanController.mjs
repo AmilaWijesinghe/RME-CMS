@@ -1,5 +1,6 @@
 import { ComboPlan } from "../models/comboPlan.mjs";
 import { validationResult } from "express-validator";
+import cloudinary from "../utils/cloudinary.mjs";
 
 export const findComboPlanById = async (req, res, next) => {
   try {
@@ -39,9 +40,20 @@ export const getOneComboPlan = async (req, res, next) => {
 
 export const createComboPlan = async (req, res, next) => {
   try {
+    const { comboPlanName, description, items, price, image } = req.body;
+    const imageResult = await cloudinary.uploader.upload(image, {
+      resource_type: "auto",
+      public_id: "menuitem_img_" + Date.now(),
+    });
     const result = validationResult(req);
     if (!result.isEmpty()) return res.status(400).send(result.array());
-    const newcomboPlan = new ComboPlan(request.body);
+    const newcomboPlan = new ComboPlan({
+      comboPlanName,
+      description,
+      items,
+      price,
+      imageURL: imageResult.url,
+    });
     const savedcomboPlan = await newcomboPlan.save();
     res.status(201).send(savedcomboPlan);
   } catch (error) {
@@ -55,9 +67,24 @@ export const updateComboPlan = async (req, res, next) => {
     const result = validationResult(req);
     if (!result.isEmpty()) return res.status(400).send(result.array());
     const { id } = req.params;
-    const updatedItem = await ComboPlan.findByIdAndUpdate(id, req.body, {
-      new: true,
+    const { comboPlanName, description, items, price, image } = req.body;
+    const imageResult = await cloudinary.uploader.upload(image, {
+      resource_type: "auto",
+      public_id: "menuitem_img_" + Date.now(),
     });
+    const updatedItem = await ComboPlan.findByIdAndUpdate(
+      id,
+      {
+        comboPlanName,
+        description,
+        items,
+        price,
+        imageURL: imageResult.url,
+      },
+      {
+        new: true,
+      }
+    );
     return res.status(200).send(updatedItem);
   } catch (error) {
     res.status(500).json({ message: error.message });

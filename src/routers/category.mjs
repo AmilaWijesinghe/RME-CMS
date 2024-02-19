@@ -59,13 +59,13 @@ router.put("/api/categories/:id", findCategoryById, checkSchema(categoryValidati
   }
 });
 
-router.delete("/api/categories /:id", findCategoryById, async (request, response) => {
+router.delete("/api/categories/:id", findCategoryById, async (request, response) => {
   const { id } = request.params;
   try {
     const item = await Category.findByIdAndDelete(id);
     return response.sendStatus(200);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    response.status(500).json({ message: error.message });
   }
 });
 
