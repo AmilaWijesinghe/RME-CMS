@@ -68,8 +68,8 @@ export const createMenuItem = async (req, res, next) => {
 };
 
 export const updateMenuItem = async (req, res, next) => {
-  const result = validationResult(req);
-  if (!result.isEmpty()) return response.status(400).send(result.array());
+  // const result = validationResult(req);
+  // if (!result.isEmpty()) return response.status(400).send(result.array());
   const { id } = req.params;
   const {
     itemName,
