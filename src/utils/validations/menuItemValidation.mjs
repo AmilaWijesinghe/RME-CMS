@@ -3,7 +3,7 @@ export const menuItemValidationSchema = {
         isLength: {
 			options: {
 				min: 1,
-				max: 50,
+				max: 20,
 			},
 			errorMessage:
 				"itemName must be at least 5 characters with a max of 50 characters",
