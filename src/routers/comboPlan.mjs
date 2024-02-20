@@ -10,9 +10,9 @@ const router = Router();
   
   router.get("/api/comboPlan/:id", findComboPlanById, getOneComboPlan );
   
-  router.post("/api/comboPlan", createComboPlan);
+  router.post("/api/comboPlan", checkSchema(comboPlanValidationSchema), createComboPlan);
   
-  router.put("/api/comboPlan/:id", findComboPlanById,  updateComboPlan);
+  router.put("/api/comboPlan/:id", checkSchema(comboPlanValidationSchema), findComboPlanById,  updateComboPlan);
   
   router.delete("/api/comboPlan/:id", findComboPlanById, deleteComboPlan);
   

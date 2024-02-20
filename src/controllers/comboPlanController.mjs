@@ -40,13 +40,13 @@ export const getOneComboPlan = async (req, res, next) => {
 
 export const createComboPlan = async (req, res, next) => {
   try {
+    const result = validationResult(req);
+    if (!result.isEmpty()) return res.status(400).send(result.array());
     const { comboPlanName, description, items, price, image } = req.body;
     const imageResult = await cloudinary.uploader.upload(image, {
       resource_type: "auto",
       public_id: "menuitem_img_" + Date.now(),
     });
-    const result = validationResult(req);
-    if (!result.isEmpty()) return res.status(400).send(result.array());
     const newcomboPlan = new ComboPlan({
       comboPlanName,
       description,
@@ -64,8 +64,8 @@ export const createComboPlan = async (req, res, next) => {
 
 export const updateComboPlan = async (req, res, next) => {
   try {
-    // const result = validationResult(req);
-    // if (!result.isEmpty()) return res.status(400).send(result.array());
+    const result = validationResult(req);
+    if (!result.isEmpty()) return res.status(400).send(result.array());
     const { id } = req.params;
     const { comboPlanName, description, items, price, image } = req.body;
     const imageResult = await cloudinary.uploader.upload(image, {

@@ -5,6 +5,7 @@ import designRouter from "../routers/design.mjs";
 import comboPlanRouter from "../routers/comboPlan.mjs";
 import userRouter from "../routers/user.mjs"
 import tableRouter from "../routers/table.mjs"
+import reservationRouter from "../routers/reservation.mjs";
 
 const router = Router();
 
@@ -14,5 +15,6 @@ router.use(designRouter);
 router.use(comboPlanRouter);
 router.use(userRouter);
 router.use(tableRouter);
+router.use(reservationRouter);
 
 export default router;

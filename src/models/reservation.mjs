@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose';
 
-const reservationSchema = new Schema({
+const ReservationSchema = new Schema({
   date: {
     type: Date,
   },
@@ -13,8 +13,8 @@ const reservationSchema = new Schema({
   guestInfo: {
     type: Object,
     properties: {
-      name: { type: String, required: true },
-      email: { type: String, required: true },
+      name: { type: String,  },
+      email: { type: String,  },
       phone: { type: String, optional: true },
     },
   },
@@ -25,7 +25,7 @@ const reservationSchema = new Schema({
   status: {
     type: String,
     enum: ['Confirmed', 'Arrived', 'Completed', 'Cancelled'],
-    default: 'Confirmed', // Reservations are confirmed by default
+    default: 'Confirmed',
   },
   specialRequests: {
     type: String,
@@ -33,4 +33,4 @@ const reservationSchema = new Schema({
   },
 });
 
-export default model('Reservation', reservationSchema);
+export const Reservation = model('Reservation', ReservationSchema);

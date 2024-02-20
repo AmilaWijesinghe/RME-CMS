@@ -4,9 +4,9 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 cloudinary.config({
-    cloud_name: "dxwjj3n0p",
-    api_key: 787459185477345,
-    api_secret: "EzdgHDphFd-WQ9poN0i06BTDbI4",
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_SECRET_KEY,
   });
 
 export default cloudinary;

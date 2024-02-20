@@ -19,7 +19,7 @@ export const comboPlanValidationSchema = {
         isLength: {
           options: {
             min: 1,
-            max: 150,
+            max: 500,
           },
           errorMessage:
             "description must be at least 5 characters with a max of 150 characters",

@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const DesignSchema = new mongoose.Schema({
-  logo: {
+  logoURL: {
     type:String,
     required: true,
   },

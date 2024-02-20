@@ -14,5 +14,21 @@ export const designvalidationSchema = {
         isString: {
           errorMessage: "restaurantName must be a string!",
         },
+      },
+      color1: {
+        notEmpty: {
+          errorMessage: "color1 cannot be empty",
+        },
+        isString: {
+          errorMessage: "color1 must be a string!",
+        },
+      },
+      color2: {
+        notEmpty: {
+          errorMessage: "color2 cannot be empty",
+        },
+        isString: {
+          errorMessage: "color2 must be a string!",
+        },
       }
 }
