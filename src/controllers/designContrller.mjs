@@ -23,29 +23,6 @@ export const getDesigns = async (req, res, next) => {
   }
 };
 
-export const createDesign = async (req, res, next) => {
-  const result = validationResult(req);
-  if (!result.isEmpty()) return res.status(400).send(result.array());
-  try {
-    const { logo, restaurantName, color1, color2 } = req.body;
-    const imageResult = await cloudinary.uploader.upload(logo, {
-      resource_type: "auto",
-      public_id: "menuitem_img_" + Date.now(),
-    });
-    const newMenuItem = new Design({
-      logoURL: imageResult.url,
-      restaurantName,
-      color1,
-      color2,
-    });
-    const savedMenuItem = await newMenuItem.save();
-    res.status(201).send(savedMenuItem);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send({ message: "Failed to create design" });
-  }
-};
-
 export const updateDesign = async (req, res, next) => {
   const result = validationResult(req);
   if (!result.isEmpty()) return res.status(400).send(result.array());
