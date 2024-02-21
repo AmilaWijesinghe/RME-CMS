@@ -1,6 +1,6 @@
-import { Schema, model } from 'mongoose';
+import mongoose from 'mongoose';
 
-const tableSchema = new Schema({
+const TableSchema = new mongoose.Schema({
   number: {
     type: Number,
     unique: true,
@@ -12,12 +12,8 @@ const tableSchema = new Schema({
     type: String,
     enum: ['Indoor', 'Outdoor', 'Patio'],
     default: 'Indoor'
-  },
-  availability: {
-    type: Boolean,
-    default: true
-  },
+  }
 
 });
 
-export const Table =  model('Table', tableSchema);
+export const Table = mongoose.model('Table', TableSchema);

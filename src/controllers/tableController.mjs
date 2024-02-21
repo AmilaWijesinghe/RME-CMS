@@ -1,19 +1,14 @@
 import { Table } from "../models/table.mjs";
 
 export const getTableById = async (req, res, next) => {
-  try {
-    const { id } = req.param;
-    const table = await Table.findById(id);
-    if (!table)
-      return res
-        .status(400)
-        .json({ message: `cannot find any table with ID ${id}` });
-    req.existTable = table;
-    next();
-  } catch (error) {
-    console.error(error);
-    res.status(500).send({ message: error });
-  }
+  const { id } = req.params;
+  const table = await Table.findById(id);
+  if (!table)
+    return res
+      .status(400)
+      .json({ message: `cannot find any table with ID ${id}` });
+  req.existTable = table;
+  next();
 };
 
 export const getTables = async (req, res, next) => {
@@ -37,19 +32,21 @@ export const getOneTable = async (req, res, next) => {
 };
 
 export const createTable = async (req, res, next) => {
-    try {
-      const newTable = await Table.create(req.body);
-      return res.status(201).send(newTable);
-    } catch (error) {
-      console.error(error);
-      res.status(500).send({ message: "Error creating table" });
-    }
-  };
+  try {
+    const newTable = await Table.create(req.body);
+    return res.status(201).send(newTable);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: "Error creating table" });
+  }
+};
 
 export const updateTable = async (req, res, next) => {
   try {
-    const { id } = req.param;
-    const updatedTable = await Table.findByIdAndUpdate(id, req.body);
+    const { id } = req.params;
+    const updatedTable = await Table.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
     return res.status(200).send(updatedTable);
   } catch (error) {
     console.error(error);
@@ -57,13 +54,13 @@ export const updateTable = async (req, res, next) => {
   }
 };
 
-export const deleteTable = async(req, res, next) => {
-    try {
-        const { id } = req.param;
-        await Table.findByIdAndDelete(id);
-        return res.sendStatus(200);
-    } catch (error) {
-        console.error(error);
+export const deleteTable = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    await Table.findByIdAndDelete(id);
+    return res.sendStatus(200);
+  } catch (error) {
+    console.error(error);
     res.status(500).send({ message: "Error deleting table" });
-    }
+  }
 };

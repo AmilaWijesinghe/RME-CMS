@@ -4,9 +4,6 @@ const ReservationSchema = new Schema({
   date: {
     type: Date,
   },
-  time: {
-    type: Date,
-  },
   partySize: {
     type: Number,
   },
@@ -21,6 +18,11 @@ const ReservationSchema = new Schema({
   table: {
     type: Schema.Types.ObjectId,
     ref: 'Table',
+  },
+  event:{
+    type:String,
+    enum: ['lunch', 'breakfast', 'dinner'],
+    default:'dinner'
   },
   status: {
     type: String,
