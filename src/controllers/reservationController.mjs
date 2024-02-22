@@ -1,58 +1,81 @@
 import { Table } from "../models/table.mjs";
 import { Reservation } from "../models/reservation.mjs";
 
-export const availabilityCheck = async (req, res) => {
-    const { date, time } = req.params;
-    // Parse date and time as appropriate for your database
-    const parsedDate = new Date(date);
-    const parsedTime = new Date(time);
-  
-    try {
-      const availableTables = await Table.find({
-        availability: true,
-        capacity: { $gte: req.body.partySize }, // Optional area filter
-        // Check for existing reservations overlapping with parsedDate and parsedTime
-        reservations: { $nin: [
-          { start: { $lte: parsedTime }, end: { $gt: parsedDate } },
-          { start: { $lt: parsedDate }, end: { $gte: parsedTime } }
-        ]}
-      });
-      res.json(availableTables);
-    } catch (error) {
-      res.status(500).json({ message: 'Error checking availability' });
-    }
-  }
-
-  export const reservationConfirmation = async (req, res) => {
-    const { date, time, partySize, ...guestInfo } = req.body;
-    // Find the selected table (from step 1)
-   
-    console.log(req.body)
-    const selectedTable = await Table.findById(req.body.tableId);
-  
-    if (!selectedTable) {
-      return res.status(404).json({ message: 'Table not found' });
-    }
-  
-    // Create a new reservation document
-    const reservation = new Reservation({
-      date,
-      time,
-      partySize,
-      table: selectedTable._id,
-      ...guestInfo
+const updateReservationStatus = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await Reservation.findByIdAndUpdate(id, {
+      $set: {
+        status: "Cancelled",
+      },
     });
-  
-    try {
-      await reservation.save();
-      // Update table availability
-      selectedTable.availability = false;
-      await selectedTable.save();
-      // Send confirmation email/SMS
-      // ... (code for sending confirmation)
-      res.json({ message: 'Reservation confirmed' });
-    } catch (error) {
-        console.log(error)
-      res.status(500).json({ message: 'Error creating reservation' });
-    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "An error occurred" });
   }
+};
+
+async function filterAvailableTables(partySize, date, event) {
+  // 1. Get reservations already booked for the specified date and event:
+  const bookedReservations = await Reservation.find({
+    date,
+    event,
+    status: { $in: ["Confirmed", "Arrived"] },
+  });
+
+  // 2. Extract booked table IDs:
+  const bookedTableIds = bookedReservations.map(
+    (reservation) => reservation.table
+  );
+
+  // 3. Find available tables by filtering out booked ones:
+  const availableTables = await Table.find({
+    _id: { $nin: bookedTableIds },
+    capacity: { $gte: partySize },
+  });
+
+  return availableTables;
+}
+
+export const getAvailableTabels = async (req, res) => {
+  const { partySize, date, event } = req.body;
+
+  try {
+    const availableTables = await filterAvailableTables(partySize, date, event);
+    res.send(availableTables);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "An error occurred" });
+  }
+};
+
+export const makeAReservation = async (req, res) => {
+  try {
+    const newReservation = new Reservation(req.body);
+    const reservation = await newReservation.save();
+    return res.status(201).send(reservation);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "An error occurred" });
+  }
+};
+
+export const updateReservation = async (req, res) => {
+  try {
+    await updateReservationStatus(req, res);
+    await makeAReservation(req, res);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "An error occurred" });
+  }
+};
+
+export const cancelReservation = async (req, res) => {
+  try {
+    await updateReservationStatus(req, res);
+    return res.sendStatus(200);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "An error occurred" });
+  }
+};

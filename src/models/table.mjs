@@ -13,7 +13,6 @@ const TableSchema = new mongoose.Schema({
     enum: ['Indoor', 'Outdoor', 'Patio'],
     default: 'Indoor'
   }
-
 });
 
 export const Table = mongoose.model('Table', TableSchema);

@@ -1,10 +1,15 @@
 import { Router } from "express";
-import { availabilityCheck, reservationConfirmation } from "../controllers/reservationController.mjs";
+import { getAvailableTabels, makeAReservation, updateReservation, cancelReservation} from "../controllers/reservationController.mjs";
 
-const router = Router()
 
-router.get('/api/tables/:date/:time', availabilityCheck);
+const router = Router();
 
-router.post("/api/reservation", reservationConfirmation)
-  
-  export default router;
+router.post("/api/reservation/availableTables", getAvailableTabels);
+
+router.post("/api/reservation", makeAReservation);
+
+router.put("/api/reservation/:id", updateReservation);
+
+router.delete("/api/reservation/:id", cancelReservation)
+
+export default router;

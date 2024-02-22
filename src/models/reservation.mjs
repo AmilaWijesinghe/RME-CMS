@@ -21,8 +21,7 @@ const ReservationSchema = new Schema({
   },
   event:{
     type:String,
-    enum: ['lunch', 'breakfast', 'dinner'],
-    default:'dinner'
+    enum: ['lunch', 'breakfast', 'dinner']
   },
   status: {
     type: String,
