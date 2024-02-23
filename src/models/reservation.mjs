@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import mongoose, { Schema, model } from 'mongoose';
 
 const ReservationSchema = new Schema({
   date: {
@@ -30,7 +30,7 @@ const ReservationSchema = new Schema({
   },
   specialRequests: {
     type: String,
-    optional: true, // Allow for special requests
+    optional: true, 
   },
 });
 

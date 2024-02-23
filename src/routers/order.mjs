@@ -34,20 +34,8 @@ router.get("/api/order/:id", findOrderById, (request, response) => {
   }
 });
 router.post("/api/order", async (request, response) => {
-  const { id } = request.params;
-  const { userEmail, phone, streetAddress, postCode, city, cartProduct, paid } =
-    request.body;
   try {
-    const newOrder = await Order.create({
-      id,
-      userEmail,
-      phone,
-      streetAddress,
-      postCode,
-      city,
-      cartProduct,
-      paid,
-    });
+    const newOrder = await Order.create(request.body);
     return response.status(201).send(newOrder);
   } catch (error) {
     console.error(error);
@@ -55,25 +43,28 @@ router.post("/api/order", async (request, response) => {
   }
 });
 
-router.put("/api/order/:id", findOrderById,async (request, response) => {
-    const { id } = request.params;
-    try {
-         const updatedOrder = await Order.findByIdAndUpdate(id, request.body, { new: true });
-        return response.status(200).send(updatedOrder)
-    } catch (error) {
-        console.error(error);
+router.put("/api/order/:id", findOrderById, async (request, response) => {
+  const { id } = request.params;
+  try {
+    const updatedOrder = await Order.findByIdAndUpdate(id, request.body, {
+      new: true,
+    });
+    return response.status(200).send(updatedOrder);
+  } catch (error) {
+    console.error(error);
     response.status(500).send({ message: "Error updatind order" });
-    }
-})
+  }
+});
 
-router.delete("/api/order/:id", findOrderById, (request, response) => {
-    const { id } = request.params;
-    try {
-        return response.status(200)
-    } catch (error) {
-        console.error(error);
+router.delete("/api/order/:id", async (request, response) => {
+  const { id } = request.params;
+  try {
+    await Order.findOneAndDelete(id);
+    return response.status(200);
+  } catch (error) {
+    console.error(error);
     response.status(500).send({ message: "Error deleting order" });
-    }
-})
+  }
+});
 
 export default router;

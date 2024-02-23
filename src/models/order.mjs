@@ -24,13 +24,32 @@ const OrderSchema = new mongoose.Schema({
             qty:{
                 type:Array
             },
+            extraIngredients:[
+                {
+                  ingredientName: {
+                    type: Array,
+                  },
+                  ingredientPrice: {
+                    type: Array,
+                  },
+                },
+              ],
             price:{
                 type:Array
             }
         }
     ],
-    paid:{
-        type:Boolean
+    totalPrice:{
+        type:Number
+    },
+    kitchenConfirmed: {
+        type: Boolean,
+        default: false,
+      },
+    paymentStatus:{
+        type: String,
+        enum: ['Pending', 'Paid'],
+        default: 'Pending',
     }
 },
 {Date:true}
