@@ -7,44 +7,46 @@ const OrderSchema = new mongoose.Schema({
     phone:{
         type:Number
     },
-    streetAddress:{
-        type:String
-    },
-    postCode:{
-        type:String
-    },
-    city:{
-        type:String
-    },
     cartProduct:[
         {
             itemName:{
-                type:Array
+                type:String
             },
             qty:{
-                type:Array
+                type:String
             },
+            sizes: [
+                {
+                  sizeName: {
+                    type: String,
+                  },
+                  percentage: {
+                    type: Number,
+                  },
+                },
+              ],
             extraIngredients:[
                 {
                   ingredientName: {
-                    type: Array,
+                    type: String,
                   },
                   ingredientPrice: {
-                    type: Array,
+                    type: Number,
                   },
                 },
               ],
             price:{
-                type:Array
+                type:Number
             }
         }
     ],
     totalPrice:{
         type:Number
     },
-    kitchenConfirmed: {
-        type: Boolean,
-        default: false,
+    orderStatus: {
+        type: String,
+        enum: ['Placed','Ready','Pickup','Cancelled'],
+        default: 'Placed',
       },
     paymentStatus:{
         type: String,

@@ -6,7 +6,7 @@ export const menuItemValidationSchema = {
 				max: 20,
 			},
 			errorMessage:
-				"itemName must be at least 5 characters with a max of 50 characters",
+				"itemName must be at least 1 characters with a max of 50 characters",
 		},
         notEmpty: {
 			errorMessage: "itemName cannot be empty",

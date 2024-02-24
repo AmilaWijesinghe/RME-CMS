@@ -34,9 +34,13 @@ const MenuItemsSchema = new mongoose.Schema(
         },
         ingredientPrice: {
           type: Array,
-        },
+        }, 
       },
     ],
+    itemAvailable:{
+      type: Boolean,
+      default: true,
+  }
   },
   {
     Date: true,
