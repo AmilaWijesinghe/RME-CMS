@@ -1,6 +1,9 @@
 import mongoose from "mongoose";
 
 const OrderSchema = new mongoose.Schema({
+    orderCode:{
+        type:String
+    },
     userEmail:{
         type:String
     },
@@ -52,8 +55,13 @@ const OrderSchema = new mongoose.Schema({
         type: String,
         enum: ['Pending', 'Paid'],
         default: 'Pending',
+    },
+    orderType:{
+        type:String,
+        enum:["take Away", "dining"],
     }
 },
+
 {Date:true}
 );
 export const Order = mongoose.model("orders", OrderSchema);

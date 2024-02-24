@@ -1,6 +1,7 @@
 import { Order } from "../models/order.mjs";
 import { MenuItems } from "../models/menuItem.mjs";
 import { transporter } from "../utils/mail/nodeMailer.mjs";
+import { Design } from "../models/design.mjs";
 
 export const updateOrderStatus = async (req, res) => {
   try {
@@ -8,16 +9,18 @@ export const updateOrderStatus = async (req, res) => {
     await Order.findByIdAndUpdate(id, {
       orderStatus: req.body.orderStatus,
     });
+    const design = await Design.find()
+    const order = await Order.findById(id)
     const orderMail = {
       from: {
-        name: restaurantName,
+        name: design.restaurantName,
         address: process.env.USER_EMAIL,
       },
-      to: email,
-      subject: "ahbhsjbajhd",
-      text: "jsahdvsjadv",
-      html: "<b> sajdbhsabd </b>",
-    };
+      to: order.userEmail,
+      subject: "Your order is ready! ",
+      text: "Your order is ready",
+      html: `<b> We're excited to let you know that your order ${order.orderCode} is ready for pickup! </b>`,
+    }
     await transporter.sendMail(orderMail);
     return res.sendStatus(200);
   } catch (error) {
