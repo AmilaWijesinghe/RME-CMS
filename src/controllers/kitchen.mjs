@@ -28,11 +28,12 @@ export const updateItemStatus = async (req, res) => {
   try {
     const { id } = req.params;
     const item = await MenuItems.findById(id);
-    if (item.itemAvailable === true)
-      await MenuItems.findByIdAndUpdate(id, {
-        itemAvailable: false,
-      });
-    return res.sendStatus(200);
+    if (item.itemAvailable === true){
+        await MenuItems.findByIdAndUpdate(id, {
+            itemAvailable: false,
+          });
+        return res.sendStatus(200);
+    }  
     await MenuItems.findByIdAndUpdate(id, {
       itemAvailable: true,
     });
