@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getPendingOrders, updateOrderStatus, updateItemStatus, getOderById } from "../controllers/kitchen.mjs";
+import { getPendingOrders, updateOrderStatus, updateItemStatus, getOderById } from "../controllers/kitchenController.mjs";
 import { getMenuItems } from "../controllers/menuItemController.mjs";
 
 const router = Router();

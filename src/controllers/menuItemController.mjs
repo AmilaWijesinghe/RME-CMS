@@ -16,7 +16,7 @@ export const findItemById = async (req, res, next) => {
 export const getMenuItems = async (req, res, next) => {
   try {
     const menuItems = await MenuItems.find({});
-    res.status(200).send(menuItems);
+    return res.status(200).send(menuItems);
   } catch (error) {
     console.error(error);
     res.status(500).send({ message: "Error retrieving menu items" });

@@ -2,15 +2,20 @@ import { Order } from "../models/order.mjs";
 import { MenuItems } from "../models/menuItem.mjs";
 import { transporter } from "../utils/mail/nodeMailer.mjs";
 import { Design } from "../models/design.mjs";
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 export const updateOrderStatus = async (req, res) => {
   try {
     const { id } = req.params;
     await Order.findByIdAndUpdate(id, {
+      userEmail:"amilanwijesinghe01@gmail.com",
       orderStatus: req.body.orderStatus,
     });
     const design = await Design.find()
     const order = await Order.findById(id)
+    console.log(design)
     const orderMail = {
       from: {
         name: design.restaurantName,
