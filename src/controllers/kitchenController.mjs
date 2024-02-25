@@ -12,7 +12,7 @@ export const updateOrderStatus = async (req, res) => {
     await Order.findByIdAndUpdate(id, {
       orderStatus: "ready",
     });
-    const design = await Design.find()
+    const design = await Design.findById("65d4ee4bb3e582b1c98ef387")
     const order = await Order.findById(id)
     console.log(design)
     const orderMail = {
