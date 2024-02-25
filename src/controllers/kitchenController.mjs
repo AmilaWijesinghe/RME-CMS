@@ -10,8 +10,7 @@ export const updateOrderStatus = async (req, res) => {
   try {
     const { id } = req.params;
     await Order.findByIdAndUpdate(id, {
-      userEmail:"amilanwijesinghe01@gmail.com",
-      orderStatus: req.body.orderStatus,
+      orderStatus: "ready",
     });
     const design = await Design.find()
     const order = await Order.findById(id)

@@ -59,6 +59,7 @@ const OrderSchema = new mongoose.Schema({
     orderType:{
         type:String,
         enum:["take Away", "dining"],
+        default:"take Away"
     }
 },
 
