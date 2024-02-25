@@ -14,7 +14,6 @@ export const updateOrderStatus = async (req, res) => {
     });
     const design = await Design.findById("65d4ee4bb3e582b1c98ef387")
     const order = await Order.findById(id)
-    console.log(design)
     const orderMail = {
       from: {
         name: design.restaurantName,
