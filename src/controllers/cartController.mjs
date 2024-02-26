@@ -13,8 +13,7 @@ export const getCartList = async (req, res) => {
 
 export const createCartList = async (req, res) => {
   try {
-    const { id } = req.params;
-    const list = await Cart.findByIdAndUpdate(id, req.body, { new: true });
+    const list = await Cart.create( req.body);
     return res.status(200).send(list);
   } catch (error) {
     console.error(error);
@@ -25,7 +24,7 @@ export const createCartList = async (req, res) => {
 export const deleteCart = async (req, res) => {
   try {
     const { id } = req.params;
-    const list = await Cart.findByIdAndDelete(id);
+    await Cart.findByIdAndDelete(id);
     return res.sendStatus(200);
   } catch (error) {
     console.error(error);
