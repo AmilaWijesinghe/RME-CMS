@@ -13,12 +13,12 @@ export const getPageContent = async (req, res) => {
 
 export const updatePageContent = async (req, res) => {
   try {
+    const id = "65dc13b02b098a7eca70325a";
+    const { headerText, paragraph, image } = req.body;
     const imageResult = await cloudinary.uploader.upload(image, {
       resource_type: "auto",
       public_id: "menuitem_img_" + Date.now(),
     });
-    const id = "65dc13b02b098a7eca70325a";
-    const { headerText, paragraph, image } = req.body;
     const updatedContent = await landingPage.findByIdAndUpdate(
       id,
       {
