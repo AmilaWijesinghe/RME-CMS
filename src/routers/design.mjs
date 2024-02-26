@@ -5,8 +5,8 @@ import { findDesignById, getDesigns, updateDesign } from "../controllers/designC
 
 const router = Router();
 
-  router.get("/api/design", getDesigns);
+  router.get("/", getDesigns);
     
-  router.put("/api/design/:id", findDesignById, checkSchema(designvalidationSchema), updateDesign);
+  router.put("/:id", findDesignById, checkSchema(designvalidationSchema), updateDesign);
   
   export default router;

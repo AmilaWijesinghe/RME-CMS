@@ -3,14 +3,14 @@ import { getOrders, createOrder, getOneOrder, findOrderById, updateOrder, delete
 
 const router = Router();
 
-router.get("/api/order", getOrders);
+router.get("/", getOrders);
 
-router.get("/api/order/:id", findOrderById, getOneOrder);
+router.get("/:id", findOrderById, getOneOrder);
 
-router.post("/api/order", createOrder);
+router.post("/", createOrder);
 
-router.put("/api/order/:id", findOrderById, updateOrder);
+router.put("/:id", findOrderById, updateOrder);
 
-router.delete("/api/order/:id", deleteOrder);
+router.delete("/:id", deleteOrder);
 
 export default router;

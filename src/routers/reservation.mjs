@@ -4,12 +4,12 @@ import { getAvailableTabels, makeAReservation, updateReservation, cancelReservat
 
 const router = Router();
 
-router.post("/api/reservation/availableTables", getAvailableTabels);
+router.post("/availableTables", getAvailableTabels);
 
-router.post("/api/reservation", makeAReservation);
+router.post("/", makeAReservation);
 
-router.put("/api/reservation/:id", updateReservation);
+router.put("/:id", updateReservation);
 
-router.delete("/api/reservation/:id", cancelReservation)
+router.delete("/:id", cancelReservation)
 
 export default router;

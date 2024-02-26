@@ -4,13 +4,13 @@ import { getPendingOrders, updateOrderStatus, updateItemStatus, getOderById } fr
 const router = Router();
 
 //order
-router.put("/api/kitchen/:id", updateOrderStatus);
+router.put("/:id", updateOrderStatus);
 
-router.get("/api/kitchen", getPendingOrders);
+router.get("/", getPendingOrders);
 
-router.get("/api/kitchen/:id", getOderById);
+router.get("/:id", getOderById);
 
 //item
-router.put("/api/kitchen/item/:id", updateItemStatus);
+router.put("/:id", updateItemStatus);
 
 export default router;

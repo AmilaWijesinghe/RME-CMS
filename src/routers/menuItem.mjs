@@ -5,14 +5,14 @@ import { menuItemValidationSchema } from "../utils/validations/menuItemValidatio
 
 const router = Router();
 
-router.get("/api/menuitem", getMenuItems);
+router.get("/", getMenuItems);
 
-router.get("/api/menuitem/:id", findItemById, getMenuItemById);
+router.get("/:id", findItemById, getMenuItemById);
 
-router.post("/api/menuitem", checkSchema(menuItemValidationSchema), createMenuItem);
+router.post("/", checkSchema(menuItemValidationSchema), createMenuItem);
 
-router.put("/api/menuitem/:id", findItemById, checkSchema(menuItemValidationSchema), updateMenuItem);
+router.put("/:id", findItemById, checkSchema(menuItemValidationSchema), updateMenuItem);
 
-router.delete("/api/menuitem/:id", findItemById, deleteMenuItem);
+router.delete("/:id", findItemById, deleteMenuItem);
 
 export default router;

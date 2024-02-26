@@ -6,14 +6,14 @@ import { findComboPlanById, getComboPlans, getOneComboPlan, createComboPlan, upd
 const router = Router();
 
 
-  router.get("/api/comboPlan", getComboPlans);
+  router.get("/", getComboPlans);
   
-  router.get("/api/comboPlan/:id", findComboPlanById, getOneComboPlan );
+  router.get("/:id", findComboPlanById, getOneComboPlan );
   
-  router.post("/api/comboPlan", checkSchema(comboPlanValidationSchema), createComboPlan);
+  router.post("/", checkSchema(comboPlanValidationSchema), createComboPlan);
   
-  router.put("/api/comboPlan/:id", checkSchema(comboPlanValidationSchema), findComboPlanById,  updateComboPlan);
+  router.put("/:id", checkSchema(comboPlanValidationSchema), findComboPlanById,  updateComboPlan);
   
-  router.delete("/api/comboPlan/:id", findComboPlanById, deleteComboPlan);
+  router.delete("/:id", findComboPlanById, deleteComboPlan);
   
   export default router;

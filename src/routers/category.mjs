@@ -5,14 +5,14 @@ import { findCategoryById, getCategories, getOneCategory, createCategory, update
 
 const router = Router();
 
-router.get("/api/categories", getCategories);
+router.get("/", getCategories);
 
-router.get("/api/categories/:id", findCategoryById, getOneCategory);
+router.get("/:id", findCategoryById, getOneCategory);
 
-router.post("/api/categories", checkSchema(categoryValidationSchema), createCategory);
+router.post("/", checkSchema(categoryValidationSchema), createCategory);
 
-router.put("/api/categories/:id", findCategoryById, checkSchema(categoryValidationSchema), updateCategory);
+router.put("/:id", findCategoryById, checkSchema(categoryValidationSchema), updateCategory);
 
-router.delete("/api/categories/:id", findCategoryById, deleteCategory);
+router.delete("/:id", findCategoryById, deleteCategory);
 
 export default router;

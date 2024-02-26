@@ -9,18 +9,22 @@ import reservationRouter from "../routers/reservation.mjs";
 import orderRouter from '../routers/order.mjs';
 import kitchenRouter from "./kitchen.mjs"
 import dummyValuesRouter from "../routers/dummyValues.mjs"
+import landingPageRouter  from "../routers/landingPage.mjs";
+import aboutPageRouter from "../routers/aboutPage.mjs"
 
 const router = Router();
 
-router.use(menuItemRouter);
-router.use(categoryRouter);
-router.use(designRouter);
-router.use(comboPlanRouter);
+router.use("/api/menuitem", menuItemRouter);
+router.use("/api/categories",categoryRouter);
+router.use("/api/design", designRouter);
+router.use("/api/comboPlan", comboPlanRouter);
 router.use(userRouter);
-router.use(tableRouter);
-router.use(reservationRouter);
-router.use(orderRouter);
-router.use(kitchenRouter);
-router.use(dummyValuesRouter)
+router.use("/api/table", tableRouter);
+router.use("/api/reservation", reservationRouter);
+router.use("/api/order", orderRouter);
+router.use("/api/kitchen", kitchenRouter);
+router.use(dummyValuesRouter);
+router.use("/api/landingpage", landingPageRouter);
+router.use("/api/aboutpage", aboutPageRouter);
 
 export default router;

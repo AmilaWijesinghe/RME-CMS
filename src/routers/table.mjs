@@ -3,14 +3,14 @@ import { createTable, getTables, getTableById, getOneTable, updateTable, deleteT
 
 const router = Router();
 
-router.get("/api/table", getTables);
+router.get("/", getTables);
 
-router.get("/api/table/:id", getTableById, getOneTable);
+router.get("/:id", getTableById, getOneTable);
 
-router.post("/api/table", createTable);
+router.post("/", createTable);
 
-router.put("/api/table/:id", getTableById, updateTable);
+router.put("/:id", getTableById, updateTable);
 
-router.delete("/api/table/:id", deleteTable);
+router.delete("/:id", deleteTable);
 
 export default router;
