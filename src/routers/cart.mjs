@@ -3,7 +3,7 @@ import { getCartList, createCartList, deleteCart } from "../controllers/cartCont
 
 const router = Router();
 
-router.get("/:id", getCartList);
+router.get("/:email", getCartList);
 
 router.post("/", createCartList)
 
