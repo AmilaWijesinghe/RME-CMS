@@ -16,19 +16,14 @@ const updateReservationStatus = async (req, res) => {
 };
 
 async function filterAvailableTables(partySize, date, event) {
-  // 1. Get reservations already booked for the specified date and event:
   const bookedReservations = await Reservation.find({
     date,
     event,
     status: { $in: ["Confirmed", "Arrived"] },
   });
-
-  // 2. Extract booked table IDs:
   const bookedTableIds = bookedReservations.map(
     (reservation) => reservation.table
   );
-
-  // 3. Find available tables by filtering out booked ones:
   const availableTables = await Table.find({
     _id: { $nin: bookedTableIds },
     capacity: { $gte: partySize },

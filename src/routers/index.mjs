@@ -11,6 +11,7 @@ import kitchenRouter from "./kitchen.mjs"
 import dummyValuesRouter from "../routers/dummyValues.mjs"
 import landingPageRouter  from "../routers/landingPage.mjs";
 import aboutPageRouter from "../routers/aboutPage.mjs"
+import aiRouter from "../routers/ai.mjs";
 
 const router = Router();
 
@@ -18,7 +19,7 @@ router.use("/api/menuitem", menuItemRouter);
 router.use("/api/categories",categoryRouter);
 router.use("/api/design", designRouter);
 router.use("/api/comboPlan", comboPlanRouter);
-router.use(userRouter);
+router.use("/api/users", userRouter);
 router.use("/api/table", tableRouter);
 router.use("/api/reservation", reservationRouter);
 router.use("/api/order", orderRouter);
@@ -26,5 +27,6 @@ router.use("/api/kitchen", kitchenRouter);
 router.use(dummyValuesRouter);
 router.use("/api/landingpage", landingPageRouter);
 router.use("/api/aboutpage", aboutPageRouter);
+router.use("/api/aiReport", aiRouter);
 
 export default router;
