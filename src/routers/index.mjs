@@ -12,6 +12,7 @@ import dummyValuesRouter from "../routers/dummyValues.mjs"
 import landingPageRouter  from "../routers/landingPage.mjs";
 import aboutPageRouter from "../routers/aboutPage.mjs"
 import aiRouter from "../routers/ai.mjs";
+import cartRouter from "../routers/cart.mjs";
 
 const router = Router();
 
@@ -28,5 +29,6 @@ router.use(dummyValuesRouter);
 router.use("/api/landingpage", landingPageRouter);
 router.use("/api/aboutpage", aboutPageRouter);
 router.use("/api/aiReport", aiRouter);
+router.use("/api/cart", cartRouter);
 
 export default router;
