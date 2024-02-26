@@ -7,6 +7,6 @@ router.get("/:email", getCartList);
 
 router.post("/", createCartList)
 
-router.delete("/:id", deleteCart)
+router.delete("/:email", deleteCart)
 
 export default router;

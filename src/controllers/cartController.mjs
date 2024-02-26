@@ -23,8 +23,10 @@ export const createCartList = async (req, res) => {
 
 export const deleteCart = async (req, res) => {
   try {
-    const { id } = req.params;
-    await Cart.findByIdAndDelete(id);
+    const { email } = req.params;
+    const existList = await Cart.find({userEmail:email})
+    console.log(existList)
+    await Cart.findByIdAndDelete(existList._id);
     return res.sendStatus(200);
   } catch (error) {
     console.error(error);

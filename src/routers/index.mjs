@@ -7,7 +7,7 @@ import userRouter from "../routers/user.mjs"
 import tableRouter from "../routers/table.mjs"
 import reservationRouter from "../routers/reservation.mjs";
 import orderRouter from '../routers/order.mjs';
-import kitchenRouter from "./kitchen.mjs"
+import kitchenRouter from "../routers/kitchen.mjs"
 import landingPageRouter  from "../routers/landingPage.mjs";
 import aboutPageRouter from "../routers/aboutPage.mjs"
 import aiRouter from "../routers/ai.mjs";
