@@ -1,21 +1,22 @@
 // node --version # Should be >= 18
 // npm install @google/generative-ai
-import { dummValue } from "../models/dummyValues.mjs";
+import { Order } from "../models/order.mjs";
 import {
   GoogleGenerativeAI,
   HarmCategory,
   HarmBlockThreshold,
 } from "@google/generative-ai";
+import MarkdownIt from "markdown-it";
 import { transporter } from "../utils/mail/nodeMailer.mjs";
-import * as dotenv from 'dotenv';
+import * as dotenv from "dotenv";
 
 dotenv.config();
 
 const MODEL_NAME = "gemini-1.0-pro";
-const API_KEY = "AIzaSyB7UDKTIsi4OCEGc7AhFCeqoURReAGyH54";
+const API_KEY = process.env.API_KEY;
 
 async function run() {
-  const data = await dummValue.find();
+  const data = await Order.find();
 
   const genAI = new GoogleGenerativeAI(API_KEY);
   const model = genAI.getGenerativeModel({ model: MODEL_NAME });
@@ -48,7 +49,7 @@ async function run() {
 
   const parts = [
     {
-      text: `Generate a comprehensive sales report for the current period, incorporating the findings from the data analysis and the predictions for the next month. Include visualizations such as charts or graphs to illustrate trends and provide a narrative summarizing key points. The report should cover areas such as product performance, customer trends, and any notable insights derived from the data analysis. Additionally, highlight the predicted sales figure for the next month and discuss the factors influencing this prediction.`,
+      text: `Generate a comprehensive sales report for the current period, incorporating the findings from the data analysis and the predictions for the next month. Include visualizations such as charts or graphs to illustrate trends and provide a narrative summarizing key points. The report should cover areas such as product performance, customer trends, and any notable insights derived from the data analysis. Additionally, highlight the predicted sales figure for the next month and discuss the factors influencing this prediction. use this data set ${data}`,
     },
     { text: "input: " },
     { text: "output: " },
@@ -62,20 +63,22 @@ async function run() {
 
   const response = result.response;
 
+  const md = MarkdownIt();
+
+  const markdownString = response.text();
+  const htmlString = md.render(markdownString);
+
   const orderMail = {
     from: {
-      name: design.restaurantName,
+      name: "amila",
       address: process.env.USER_EMAIL,
     },
-    to: "sathirabandara1@gmail.com",
+    to: "amilanwijesinghe01@gmail.com",
     subject: "Your order is ready! ",
     text: "Your order is ready",
-    html: `<b> ${response}</b>`,
-  }
+    html: `<b> ${htmlString}</b>`,
+  };
   await transporter.sendMail(orderMail);
-
-
-  console.log(response.text());
 }
 
 export const aiReport = async (req, res) => {
