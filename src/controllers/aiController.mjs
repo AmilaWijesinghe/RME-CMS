@@ -6,6 +6,10 @@ import {
   HarmCategory,
   HarmBlockThreshold,
 } from "@google/generative-ai";
+import { transporter } from "../utils/mail/nodeMailer.mjs";
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 const MODEL_NAME = "gemini-1.0-pro";
 const API_KEY = "AIzaSyB7UDKTIsi4OCEGc7AhFCeqoURReAGyH54";
@@ -46,7 +50,7 @@ async function run() {
     {
       text: `Generate a comprehensive sales report for the current period, incorporating the findings from the data analysis and the predictions for the next month. Include visualizations such as charts or graphs to illustrate trends and provide a narrative summarizing key points. The report should cover areas such as product performance, customer trends, and any notable insights derived from the data analysis. Additionally, highlight the predicted sales figure for the next month and discuss the factors influencing this prediction.`,
     },
-    { text: "input: hello" },
+    { text: "input: " },
     { text: "output: " },
   ];
 
@@ -57,6 +61,20 @@ async function run() {
   });
 
   const response = result.response;
+
+  const orderMail = {
+    from: {
+      name: design.restaurantName,
+      address: process.env.USER_EMAIL,
+    },
+    to: "sathirabandara1@gmail.com",
+    subject: "Your order is ready! ",
+    text: "Your order is ready",
+    html: `<b> ${response}</b>`,
+  }
+  await transporter.sendMail(orderMail);
+
+
   console.log(response.text());
 }
 
