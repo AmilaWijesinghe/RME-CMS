@@ -17,7 +17,7 @@ export const updatePageContent = async (req, res) => {
       resource_type: "auto",
       public_id: "menuitem_img_" + Date.now(),
     });
-    const { id } = res.params;
+    const  id  = "65dc13b02b098a7eca70325a"
     const {
       headerText,
       paragraph,
