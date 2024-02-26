@@ -78,7 +78,7 @@ async function run() {
     text: "Your order is ready",
     html: `<b> ${htmlString}</b>`,
   };
-  await transporter.sendMail(orderMail);
+  transporter.sendMail(orderMail);
 }
 
 export const aiReport = async (req, res) => {
