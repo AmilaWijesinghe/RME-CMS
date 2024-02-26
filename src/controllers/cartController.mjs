@@ -24,9 +24,7 @@ export const createCartList = async (req, res) => {
 export const deleteCart = async (req, res) => {
   try {
     const { email } = req.params;
-    const existList = await Cart.find({userEmail:email})
-    console.log(existList)
-    await Cart.findByIdAndDelete(existList._id);
+     await Cart.findOneAndDelete({userEmail:email})
     return res.sendStatus(200);
   } catch (error) {
     console.error(error);
