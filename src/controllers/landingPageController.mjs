@@ -1,4 +1,5 @@
 import { landingPage } from "../models/landingPage.mjs";
+import cloudinary from "../utils/cloudinary.mjs";
 
 export const getPageContent = async (req, res) => {
   try {
@@ -12,8 +13,21 @@ export const getPageContent = async (req, res) => {
 
 export const updatePageContent = async (req, res) => {
   try {
+    const imageResult = await cloudinary.uploader.upload(image, {
+      resource_type: "auto",
+      public_id: "menuitem_img_" + Date.now(),
+    });
     const { id } = res.params;
-    const updatedContent = await landingPage.findByIdAndUpdate(id, req.body, {
+    const {
+      headerText,
+      paragraph,
+      image
+    } = req.body;
+    const updatedContent = await landingPage.findByIdAndUpdate(id, {
+      headerText,
+      paragraph,
+      imageURL: imageResult.url
+    }, {
       new: true,
     });
     return res.status(200).send(updatedContent);
