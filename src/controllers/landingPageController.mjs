@@ -1,5 +1,5 @@
 import { landingPage } from "../models/landingPage.mjs";
-import cloudinary from "../utils/cloudinary.mjs";
+import cloudinary from "../utils/config/cloudinary.mjs";
 
 export const getPageContent = async (req, res) => {
   try {

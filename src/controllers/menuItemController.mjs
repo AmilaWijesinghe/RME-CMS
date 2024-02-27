@@ -1,6 +1,6 @@
 import { MenuItems } from "../models/menuItem.mjs";
 import { validationResult } from "express-validator";
-import cloudinary from "../utils/cloudinary.mjs";
+import cloudinary from "../utils/config/cloudinary.mjs";
 
 export const findItemById = async (req, res, next) => {
   const { id } = req.params;

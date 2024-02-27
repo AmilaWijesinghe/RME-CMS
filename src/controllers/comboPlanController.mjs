@@ -1,6 +1,6 @@
 import { ComboPlan } from "../models/comboPlan.mjs";
 import { validationResult } from "express-validator";
-import cloudinary from "../utils/cloudinary.mjs";
+import cloudinary from "../utils/config/cloudinary.mjs";
 
 export const findComboPlanById = async (req, res, next) => {
   try {

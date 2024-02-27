@@ -1,6 +1,6 @@
 import { Design } from "../models/design.mjs";
 import { validationResult } from "express-validator";
-import cloudinary from "../utils/cloudinary.mjs";
+import cloudinary from "../utils/config/cloudinary.mjs";
 
 
 export const getDesigns = async (req, res, next) => {
@@ -20,7 +20,7 @@ export const updateDesign = async (req, res, next) => {
     const { logo, restaurantName, color1, color2 } = req.body;
     const imageResult = await cloudinary.uploader.upload(logo, {
       resource_type: "auto",
-      public_id: "menuitem_img_" + Date.now(),
+      public_id: "design_img_" + Date.now(),
     });
     const updatedDesign = await Design.findByIdAndUpdate(
       "65d4ee4bb3e582b1c98ef387",

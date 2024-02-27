@@ -2,7 +2,7 @@ import { Table } from "../models/table.mjs";
 import { Design } from "../models/design.mjs";
 import { Reservation } from "../models/reservation.mjs";
 import { RestaurantInfo } from "../models/restaurantInfo.mjs";
-import { transporter } from "../utils/mail/nodeMailer.mjs";
+import { transporter } from "../utils/config/nodeMailer.mjs";
 import * as dotenv from "dotenv";
 
 dotenv.config();

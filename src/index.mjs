@@ -1,5 +1,5 @@
 import  express  from "express";
-import { connectDB } from "./utils/dbConnection.mjs";
+import { connectDB } from "./utils/config/dbConnection.mjs";
 import routers from "./routers/index.mjs";
 import cors from 'cors';
 import * as dotenv from 'dotenv';

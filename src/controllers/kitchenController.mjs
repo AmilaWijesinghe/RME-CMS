@@ -1,6 +1,5 @@
 import { Order } from "../models/order.mjs";
 import { MenuItems } from "../models/menuItem.mjs";
-import { transporter } from "../utils/mail/nodeMailer.mjs";
 import { Design } from "../models/design.mjs";
 import * as dotenv from 'dotenv';
 
@@ -14,17 +13,6 @@ export const updateOrderStatus = async (req, res) => {
     });
     const design = await Design.findById("65d4ee4bb3e582b1c98ef387")
     const order = await Order.findById(id)
-    const orderMail = {
-      from: {
-        name: design.restaurantName,
-        address: process.env.USER_EMAIL,
-      },
-      to: order.userEmail,
-      subject: "Your order is ready! ",
-      text: "Your order is ready",
-      html: `<b> We're excited to let you know that your order ${order.orderCode} is ready for pickup! </b>`,
-    }
-    await transporter.sendMail(orderMail);
     return res.sendStatus(200);
   } catch (error) {
     console.error(error);
