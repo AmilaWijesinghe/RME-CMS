@@ -2,20 +2,10 @@ import { Design } from "../models/design.mjs";
 import { validationResult } from "express-validator";
 import cloudinary from "../utils/cloudinary.mjs";
 
-export const findDesignById = async (req, res, next) => {
-  const { id } = req.params;
-  const item = await Design.findById(id);
-  if (!item)
-    return res
-      .status(400)
-      .json({ message: `cannot find any design with ID ${id}` });
-  req.findDesign = item;
-  next();
-};
 
 export const getDesigns = async (req, res, next) => {
   try {
-    const design = await Design.find();
+    const design = await Design.findById("65d4ee4bb3e582b1c98ef387");
     res.status(200).send(design);
   } catch (error) {
     console.error(error);
@@ -26,7 +16,6 @@ export const getDesigns = async (req, res, next) => {
 export const updateDesign = async (req, res, next) => {
   const result = validationResult(req);
   if (!result.isEmpty()) return res.status(400).send(result.array());
-  const { id } = req.params;
   try {
     const { logo, restaurantName, color1, color2 } = req.body;
     const imageResult = await cloudinary.uploader.upload(logo, {
@@ -34,7 +23,7 @@ export const updateDesign = async (req, res, next) => {
       public_id: "menuitem_img_" + Date.now(),
     });
     const updatedDesign = await Design.findByIdAndUpdate(
-      id,
+      "65d4ee4bb3e582b1c98ef387",
       {
         logoURL: imageResult.url,
         restaurantName,

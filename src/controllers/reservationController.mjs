@@ -1,6 +1,7 @@
 import { Table } from "../models/table.mjs";
 import { Design } from "../models/design.mjs";
 import { Reservation } from "../models/reservation.mjs";
+import { RestaurantInfo } from "../models/restaurantInfo.mjs";
 import { transporter } from "../utils/mail/nodeMailer.mjs";
 import * as dotenv from "dotenv";
 
@@ -54,14 +55,15 @@ export const makeAReservation = async (req, res) => {
     const { date, partySize, guestInfo, table, event } = req.body;
     const design = await Design.findById("65d4ee4bb3e582b1c98ef387");
     const tableNumber = await Table.findById(table);
+    const restaurantInfo = await RestaurantInfo.findById("65dd8f261068774295ad0098")
     const newReservation = new Reservation(req.body);
     const reservation = await newReservation.save();
     const orderMail = {
       from: {
-        name: "amila",
-        address: process.env.USER_EMAIL,
+        name: design.restaurantName,
+        address: restaurantInfo.companyEmail,
       },
-      to: "amilanwijesinghe01@gmail.com",
+      to: guestInfo.email,
       subject: `Your Reservation at ${design.restaurantName} is Confirmed!` ,
       text: `Your Reservation at ${design.restaurantName} is Confirmed!`,
       html: `<head>
@@ -109,7 +111,7 @@ export const makeAReservation = async (req, res) => {
   
       <p><strong>Please note:</strong></p>
       <ul>
-          <li>If you need to make any changes to your reservation, please contact us at [Phone Number] or reply to this email as soon as possible.</li>
+          <li>If you need to make any changes to your reservation, please contact us at ${restaurantInfo.phoneNumber} or reply to this email as soon as possible.</li>
           <li>We recommend arriving 10-15 minutes prior to your reservation time to ensure a smooth seating process.</li>
       </ul>
   
@@ -118,7 +120,7 @@ export const makeAReservation = async (req, res) => {
       <p>Sincerely,</p>
       <p>The Team at ${design.restaurantName}</p>
   
-      <p><a href="[Website URL]">Visit our website</a></p>
+      <p>Visit our Restaurant at ${restaurantInfo.location}</p>
   </body>`,
     };
      transporter.sendMail(orderMail);
