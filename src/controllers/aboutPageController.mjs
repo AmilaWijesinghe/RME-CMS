@@ -12,8 +12,7 @@ export const getPageContent = async (req, res) => {
 
 export const updatePageContent = async (req, res) => {
   try {
-    const { id } = res.params;
-    const updatedContent = await aboutPage.findByIdAndUpdate(id, req.body, {
+    const updatedContent = await aboutPage.findByIdAndUpdate("65dc18f2b8de1b1ff34058c4", req.body, {
       new: true,
     });
     return res.status(200).send(updatedContent);
