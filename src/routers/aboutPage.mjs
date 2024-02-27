@@ -5,6 +5,6 @@ const router = Router()
 
 router.get("/", getPageContent);
 
-router.put("/:id", updatePageContent);
+router.put("/", updatePageContent);
 
 export default router;

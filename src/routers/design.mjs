@@ -7,6 +7,6 @@ const router = Router();
 
   router.get("/", getDesigns);
     
-  router.put("/:id", checkSchema(designvalidationSchema), updateDesign);
+  router.put("/", checkSchema(designvalidationSchema), updateDesign);
   
   export default router;
