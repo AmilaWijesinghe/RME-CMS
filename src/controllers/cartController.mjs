@@ -3,7 +3,7 @@ import { Cart } from "../models/cart.mjs";
 export const getCartList = async (req, res) => {
   try {
     const { email } = req.params;
-    const list = await Cart.findOne({userEmail:email});
+    const list = await Cart.find({userEmail:email});
     return res.status(200).send(list);
   } catch (error) {
     console.error(error);
