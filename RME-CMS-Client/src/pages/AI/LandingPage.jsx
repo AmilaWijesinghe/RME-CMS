@@ -135,7 +135,7 @@ const LandingPage = () => {
         onClick={aiReportGenerate}
         className="w-[30vh] h-[45px] text-lg rounded-full bg-transparent text-white items-center justify-center text-center animate-bounceUp mt-3"
       >
-        {isLoding ? "Generating..." : "Generate Report"} <ArrowRightOutlined />{" "}
+        {isLoding ? "Generating..." : "Generate Report"} {" "}
       </Button>
       <ToastContainer />
     </div>
