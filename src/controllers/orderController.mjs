@@ -1,15 +1,15 @@
 import { Order } from "../models/order.mjs";
-import { User } from "../models/user.mjs"
-import { RestaurantInfo} from "../models/restaurantInfo.mjs"
+import { User } from "../models/user.mjs";
+import { RestaurantInfo } from "../models/restaurantInfo.mjs";
 import { transporter } from "../utils/config/nodeMailer.mjs";
-import { Design } from "../models/design.mjs"
+import { Design } from "../models/design.mjs";
 import crypto from "crypto";
 
 function generateCode() {
-  const randomBytes = crypto.randomBytes(2); // Generate 2 random bytes
-  const code = randomBytes.toString("hex").slice(0, 4); // Convert to hex string and take first 4 digits
+  const randomBytes = crypto.randomBytes(2);
+  const code = randomBytes.toString("hex").slice(0, 4);
   return code;
-};
+}
 
 export const findOrderById = async (request, response, next) => {
   const { id } = request.params;
@@ -57,7 +57,7 @@ export const createOrder = async (req, res) => {
     });
     const designInfo = await Design.findById("65d4ee4bb3e582b1c98ef387");
     const info = await RestaurantInfo.findById("65dd8f261068774295ad0098");
-    const user = await User.findOne({email:userEmail})
+    const user = await User.findOne({ email: userEmail });
     const aiMail = {
       from: {
         name: designInfo.restaurantName,

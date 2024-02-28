@@ -11,6 +11,6 @@ router.get("/", getPendingOrders);
 router.get("/:id", getOderById);
 
 //item
-router.put("/:id", updateItemStatus);
+router.put("/item/:id", updateItemStatus);
 
 export default router;
